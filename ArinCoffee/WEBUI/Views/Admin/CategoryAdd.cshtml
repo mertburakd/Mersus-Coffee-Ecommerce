@@ -1,0 +1,55 @@
+﻿@model Entities.Models.Category
+
+@{
+    ViewData["Title"] = "Kategori Ekleme";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+<h2>Kategori Ekleme Sayfası</h2>
+
+@using (Html.BeginForm("CategoryAdd", "Admin", FormMethod.Post))
+{
+
+  
+                    
+    <div class="form-horizontal">
+        <h4>&nbsp;</h4>
+        <hr />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <label class="control-label col-md-2">Kategori Adı</label>
+            <div class="col-md-10">
+                <input class="form-control" asp-for="CategoryName" />
+            </div>
+        </div>
+ 
+        <div class="form-group">
+            <h4>Description:</h4>
+            <div class="col-md-10">
+                <textarea class="ckeditor" cols="80" asp-for="Description" rows="10"></textarea>
+            </div>
+        </div>
+
+        <br />
+
+        <br>
+        <hr />
+        <br>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+
+
+    </div>
+
+}
+<br />
+<div>
+    @Html.ActionLink("Back", "Index", "", new { @class = "btn btn-info" })
+</div>
