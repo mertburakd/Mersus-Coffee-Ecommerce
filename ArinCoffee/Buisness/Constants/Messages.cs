@@ -19,7 +19,14 @@
         public static string CategoryAdded = "Kategori Başarılı Şekilde Eklendi!";
         public static string CategoryDeleted = "Kategori Başarılı Şekilde Silindi!";
 
-      
+
+        public static string CardAdd = "Ürün Sepete Eklendi!";
+        public static string CardDeleted = "Ürün Sepetten Silindi!";
+        public static string CardUpdated = "Ürün Sepette Güncellendi!";
+
+        public static string AdressAdded = "Adres Bilgisi Eklendi!";
+
+        public static string OrderAdded = "Sipariş Eklendi!";
 
   
     }

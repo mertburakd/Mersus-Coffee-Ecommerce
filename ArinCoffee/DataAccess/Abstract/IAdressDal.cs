@@ -1,6 +1,6 @@
 ﻿using Core.DataAccess;
+using Core.Results;
 using Entities.Models;
-using Entities.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
 {
-    public interface ICardDal : IEntityRepository<Card>
+    public interface IAdressDal : IEntityRepository<Adress>
     {
-        CardListSubDtoModel GetUserCardView(int id);
-        int MaxGet(bool IncDec);
+        Adress LastAddress(int UserID);
     }
 }

@@ -1,0 +1,45 @@
+﻿@model Entities.Models.DTO.UserProfileViewModel
+
+<div class="container light-style flex-grow-1 container-p-y">
+
+    <h4 class="font-weight-bold py-3 mb-4">
+        Last Order
+    </h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Piece</th>
+                <th scope="col">Price</th>
+                <th scope="col">Order Number</th>
+            </tr>
+        </thead>
+        @{    
+            @foreach (var item in Model.cards)
+            {
+                <tbody>
+                    @foreach (var zi in item)
+                    {
+                        <tr>
+                            <th scope="row">@zi.Id</th>
+                             <td class="table-plus">
+                                <img src="~/assets/images/menu/@zi.Product.MiniImage" width="70" height="70" alt="">
+                            </td>
+                            <td>@zi.Product.ProductName</td>
+                            <td>@zi.Piece</td>
+                            <td>@(zi.Piece*zi.Product.Price) $</td>
+                            <td>@zi.GroupBy</td>
+                        </tr>
+
+                    }
+                </tbody>
+            }
+        }
+    </table>
+</div>
+<hr />
+
+<br />
+<br />

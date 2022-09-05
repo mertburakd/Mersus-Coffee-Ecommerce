@@ -1,0 +1,35 @@
+﻿@model Entities.Models.DTO.CardListSubDtoModel
+<!-- cart list -->
+<aside class="cart-bar-wrapper">
+    <div class="cart-bar__close">
+        <a class="d-flex align-items-center justify-content-center" href="javascript:void(0);"><i class="fal fa-times"></i></a>
+    </div>
+    <div class="cart-bar">
+        <h4 class="cart-bar__title">Cart Items - <span>@Model.CategoryProduct.Count</span></h4>
+        <div class="cart-bar__lists">
+            @foreach (var item in Model.CategoryProduct)
+            {
+                <div class="cart-bar__item position-relative d-flex">
+                    <div class="thumb">
+                        <img src="~/assets/images/menu/@item.MiniImage" alt="image_not_found">
+                    </div>
+                    <div class="content">
+                        <h4 class="title">
+                            <a href="/Home/ProductDetails?Id=@item.ProductId">@item.ProductName</a>
+                        </h4>
+                        <span class="price">@(item.Piece*item.Price)</span>
+                        <a href="/Shop/RemoveItem?Id=@item.Id" class="remove"><i class="fal fa-times"></i></a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="cart-bar__subtotal d-flex align-items-center justify-content-between">
+            <span>Sub Total:</span>
+            <span>$ @Model.TotalPrice</span>
+        </div>
+        <div class="btns d-flex align-items-center justify-content-center">
+            <a href="/Shop/Card" class="site-btn">View Cart</a>
+            <a href="/Shop/Checkout" class="site-btn site-btn__borderd">Checkout</a>
+        </div>
+    </div>
+</aside>

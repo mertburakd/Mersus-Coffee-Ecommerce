@@ -20,19 +20,17 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSingleton<ICardService, CardManager>();
 builder.Services.AddSingleton<ICardDal, EfCardDal>();
-builder.Services.AddSingleton<ICommentService, CommentManager>();
-builder.Services.AddSingleton<ICommentDal, EfCommentDal>();
-builder.Services.AddSingleton<IFeedBackService, FeedBackManager>();
-builder.Services.AddSingleton<IFeedBackDal, EfFeedBackDal>();
+
 builder.Services.AddSingleton<IOrderService, OrderManager>();
 builder.Services.AddSingleton<IOrderDal, EfOrderDal>();
 builder.Services.AddSingleton<IProductService, ProductManager>();
 builder.Services.AddSingleton<IProductDal, EfProductDal>();
-builder.Services.AddSingleton<IWatchService, WatchManager>();
-builder.Services.AddSingleton<IWatchDal, EfWatchDal>();
+
 
 builder.Services.AddSingleton<ICategoryDal, EfCategoryDal>();
 builder.Services.AddSingleton<ICategoryService, CategoryManager>();
+builder.Services.AddSingleton<IAdressDal, EfAdressDal>();
+builder.Services.AddSingleton<IAdressService, AdressManager>();
 
 
 

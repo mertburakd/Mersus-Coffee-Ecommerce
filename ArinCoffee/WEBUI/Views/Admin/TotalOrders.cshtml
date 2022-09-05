@@ -1,0 +1,47 @@
+﻿@model Entities.Models.DTO.AdminViewOrderModel
+
+@{
+    ViewData["Title"] = "Orders";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+<div class="card-box mb-30">
+    <h2 class="h4 pd-20">Product Table</h2>
+    <table class="data-table table nowrap">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th class="table-plus datatable-nosort">Image</th>
+                <th>Product Name</th>
+                <th>Piece</th>
+                <th>Price</th>
+                <th>Order Number</th>
+            </tr>
+        </thead>
+
+        @{
+            foreach (var item in Model.cards)
+            {
+                <tbody>
+                    @foreach (var zi in item)
+                    {
+                        <tr>
+                            <td>@zi.Id</td>
+                            <td class="table-plus">
+                                <img src="~/assets/images/menu/@zi.Product.MiniImage" width="70" height="70" alt="">
+                            </td>
+                            <td>
+                                <h5 class="font-16">@zi.Product.ProductName</h5>
+                            </td>
+                            <td>@zi.Piece</td>
+                            <td>@(zi.Piece*zi.Product.Price) $</td>
+                            <td>@zi.GroupBy</td>
+                        </tr>
+                    }
+                </tbody>
+            }
+        }
+    </table>
+</div>
+<br />

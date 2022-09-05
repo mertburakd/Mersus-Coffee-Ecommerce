@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Claims;
 using WEBUI.JwtEntities;
 
 namespace WEBUI.Controllers
@@ -39,15 +40,15 @@ namespace WEBUI.Controllers
             model.categories = _categoryService.GetList().Data;
             return View(model);
         }
-       
+
         public IActionResult CategoryDetails(int id)
         {
-            return View(_categoryService.Get(id));
+            return View(_categoryService.Get(id).Data);
         }
         public IActionResult CategoryAdd()
         {
             return View();
-        }     
+        }
         public IActionResult CategoryDeleted(int id)
         {
             _categoryService.Delete(id);
@@ -64,15 +65,87 @@ namespace WEBUI.Controllers
             _categoryService.Update(category);
             return RedirectToAction("Index", "Admin");
         }
- 
+
         public IActionResult ProductAdd()
         {
-       
-            return View();
-        }
-        [HttpPost]
-        public IActionResult ProductAdd(Product product)
+            ProductDesignViewModel productDesignViewModel = new ProductDesignViewModel();
+            productDesignViewModel.categories = _categoryService.GetList().Data;
+            productDesignViewModel.product = new Product();
+            return View(productDesignViewModel);
+        }  
+        public IActionResult TotalOrders()
         {
+            AdminViewOrderModel orderdata = new AdminViewOrderModel();
+            orderdata.cards = _orderService.GetAllOrders().Data;
+            return View(orderdata);
+        }
+
+        [HttpPost]
+        public IActionResult ProductAdd(Product product, IFormFile ourFileMini, IFormFile ourFile, IFormFile ourFile2, IFormFile ourFile3, IFormFile ourFile4, IFormFile ourFile5)
+        {
+            if (ourFileMini != null)
+            {
+
+                Bitmap Pic = new Bitmap(ourFile.OpenReadStream());
+                string resimAdi = (Path.GetFileName(ourFile.FileName) + "_" + Guid.NewGuid().ToString("N") + ".jpeg");
+                Bitmap buyuk = new Bitmap(Pic, 900, 500);
+                buyuk.Save(Path.Combine(Directory.GetCurrentDirectory(), "~/assets/images/menu/" + resimAdi), ImageFormat.Jpeg);
+                buyuk.Dispose();
+                product.MiniImage = resimAdi;
+            }
+            if (ourFile != null)
+            {
+
+                Bitmap Pic = new Bitmap(ourFile.OpenReadStream());
+                string resimAdi = (Path.GetFileName(ourFile.FileName) + "_" + Guid.NewGuid().ToString("N") + ".jpeg");
+                Bitmap buyuk = new Bitmap(Pic, 900, 500);
+                buyuk.Save(Path.Combine(Directory.GetCurrentDirectory(), "~/assets/images/products/" + resimAdi), ImageFormat.Jpeg);
+                buyuk.Dispose();
+                product.Image1 = resimAdi;
+            }
+
+            if (ourFile2 != null)
+            {
+                Bitmap Pic = new Bitmap(ourFile2.OpenReadStream());
+                string resimAdi = (Path.GetFileName(ourFile2.FileName) + "_" + Guid.NewGuid().ToString("N") + ".jpeg");
+                Bitmap buyuk = new Bitmap(Pic, 900, 500);
+                buyuk.Save(Path.Combine(Directory.GetCurrentDirectory(), "~/assets/images/products/" + resimAdi), ImageFormat.Jpeg);
+                buyuk.Dispose();
+                product.Image2 = resimAdi;
+            }
+
+            if (ourFile3 != null)
+            {
+                Bitmap Pic = new Bitmap(ourFile3.OpenReadStream());
+                string resimAdi = (Path.GetFileName(ourFile3.FileName) + "_" + Guid.NewGuid().ToString("N") + ".jpeg");
+                Bitmap buyuk = new Bitmap(Pic, 900, 500);
+                buyuk.Save(Path.Combine(Directory.GetCurrentDirectory(), "~/assets/images/products/" + resimAdi), ImageFormat.Jpeg);
+                buyuk.Dispose();
+                product.Image3 = resimAdi;
+
+            }
+
+            if (ourFile4 != null)
+            {
+                Bitmap Pic = new Bitmap(ourFile4.OpenReadStream());
+                string resimAdi = (Path.GetFileName(ourFile4.FileName) + "_" + Guid.NewGuid().ToString("N") + ".jpeg");
+                Bitmap buyuk = new Bitmap(Pic, 900, 500);
+                buyuk.Save(Path.Combine(Directory.GetCurrentDirectory(), "~/assets/images/products/" + resimAdi), ImageFormat.Jpeg);
+                buyuk.Dispose();
+                product.Image4 = resimAdi;
+            }
+
+            if (ourFile5 != null)
+            {
+                Bitmap Pic = new Bitmap(ourFile4.OpenReadStream());
+                string resimAdi = (Path.GetFileName(ourFile4.FileName) + "_" + Guid.NewGuid().ToString("N") + ".jpeg");
+                Bitmap buyuk = new Bitmap(Pic, 900, 500);
+                buyuk.Save(Path.Combine(Directory.GetCurrentDirectory(), "~/assets/images/products/" + resimAdi), ImageFormat.Jpeg);
+                buyuk.Dispose();
+                product.Image5 = resimAdi;
+            }
+
+
             _productService.Add(product);
             return RedirectToAction("Index", "Admin");
         }
@@ -80,15 +153,18 @@ namespace WEBUI.Controllers
 
         public IActionResult ProductEdit(int Id)
         {
-            return View(_productService.Get(Id));
+            ProductDesignViewModel productDesignViewModel = new ProductDesignViewModel();
+            productDesignViewModel.product = _productService.Get(Id).Data;
+            productDesignViewModel.categories = _categoryService.GetList().Data;
+            return View(productDesignViewModel);
         }
-      
+
         public IActionResult DeleteProduct(int Id)
         {
             _productService.Delete(Id);
-                return RedirectToAction("", "Admin");
+            return RedirectToAction("", "Admin");
         }
-    
+
 
         [HttpPost("ProductEdit")]
         public IActionResult ProductEdit(Product product, IFormFile ourFileMini, IFormFile ourFile, IFormFile ourFile2, IFormFile ourFile3, IFormFile ourFile4, IFormFile ourFile5)
@@ -187,7 +263,7 @@ namespace WEBUI.Controllers
             ProductGet.Price = product.Price;
             ProductGet.MiniDescription = product.MiniDescription;
             ProductGet.Weight = product.Weight;
-
+            ProductGet.Category = product.Category;
             _productService.Update(ProductGet);
 
             return RedirectToAction("", "Admin");

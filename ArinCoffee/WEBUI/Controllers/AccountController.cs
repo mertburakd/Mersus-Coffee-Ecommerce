@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Buisness.Abstract;
+using Entities.Models.DTO;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WEBUI.JwtEntities;
 using WEBUI.LoginModels;
 
@@ -10,13 +13,15 @@ namespace WEBUI.Controllers
         private readonly UserManager<CustomIdentityUser> _userManager;
         private readonly RoleManager<CustomIdentityRole> _roleManager;
         private readonly SignInManager<CustomIdentityUser> _signInManager;
+        private readonly IOrderService _orderService;
 
 
-        public AccountController(SignInManager<CustomIdentityUser> signInManager, RoleManager<CustomIdentityRole> roleManager, UserManager<CustomIdentityUser> userManager)
+        public AccountController(SignInManager<CustomIdentityUser> signInManager, RoleManager<CustomIdentityRole> roleManager, UserManager<CustomIdentityUser> userManager, IOrderService orderService)
         {
             _signInManager = signInManager;
             _roleManager = roleManager;
             _userManager = userManager;
+            _orderService = orderService;
         }
 
         [HttpPost]

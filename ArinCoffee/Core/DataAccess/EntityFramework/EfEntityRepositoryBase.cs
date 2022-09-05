@@ -106,6 +106,5 @@ namespace Core.DataAccess.EntityFramework
             return ret;
         }
 
-      
     }
 }

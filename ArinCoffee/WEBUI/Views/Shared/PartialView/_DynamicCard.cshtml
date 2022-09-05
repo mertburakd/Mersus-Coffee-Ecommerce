@@ -1,0 +1,103 @@
+﻿@model Entities.Models.DTO.CardListSubDtoModel
+<div class="row">
+    <div class="col-xl-12">
+        <div class="cart-wrapper">
+            <div class="table-content table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="product-thumbnail">Product Image</th>
+                            <th class="cart-product-name">Product Name</th>
+                            <th class="product-price">Price</th>
+                            <th class="product-quantity">Quantity</th>
+                            <th class="product-quantity">Inc/Dec</th>
+                            <th class="product-subtotal">subTotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.CategoryProduct)
+                        {
+                            <tr>
+                                <td class="product-thumbnail">
+                                    <a href="#" class="img">
+                                        <img src="~/assets/images/menu/@item.MiniImage" alt="">
+                                    </a>
+                                    <a href="/Shop/RemoveItem?Id=@item.Id" class="product-remove"><i class="fal fa-times"></i></a>
+                                </td>
+                                <td class="product-name"><a href="/Home/ProductDetails?Id=@item.ProductId">@item.ProductName</a></td>
+                                <td class="product-price"><span class="amount">$@item.Price</span></td>
+                                <td class="product-quantity">
+                                    <p><span class="QuantRead">@item.Piece</span></p>
+                                </td>
+                                <td class="product-quantity">
+                                    <div class="add">
+                                        <input hidden name="CardId" value="@item.Id" />
+                                        <input class="ProdQty" type="number" id="quantity" name="Piece" min=1 value="@item.Piece">
+                                    </div>
+                                </td>
+                                <td class="product-subtotal"><span class="amount">$@(item.Piece*item.Price)</span></td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row justify-content-end">
+    <div class="col-xl-5 col-lg-7">
+        <div class="cart-total mt-100">
+            <h2 class="title">Cart Total</h2>
+            <div class="ct-sub">
+                <span>Sub Total</span>
+                <span>$ @Model.TotalPrice</span>
+            </div>
+            <div class="ct-sub ct-sub__total">
+                <span>Total</span>
+                <span>$ @Model.TotalPrice</span>
+            </div>
+            <a href="/Shop/Checkout" class="site-btn">Procced to checkout</a>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        var qtyPriceFunc = function(e) {
+            //$('.backdrop-spinner').removeClass('d-none');
+            var quantities = parseInt($(this).val());
+            var CardId = parseInt($(this).siblings("input[name='CardId']").val());
+            var QuantitySpan = $(this).closest(".add").prev().find(".QuantRead").text();
+            var postQuantities;
+
+            postQuantities = (quantities - QuantitySpan);
+
+
+            if (e.type == "keyup") {
+                if (!((e.which >= 48 && e.which <= 57) || e.which == 8 || e.which == 46)) {
+                    return;
+                };
+            };
+
+            if (quantities < 1 || quantities == null || quantities == 'null' || quantities == undefined || quantities == 'undefined' || isNaN(quantities)) {
+                e.target.value = 1;
+                quantities = 1;
+            }
+            var product = { cardId: CardId, Quantities: postQuantities };
+            $.ajax({
+                type: "POST",
+                data: JSON.stringify(product),
+                url: "/Shop/QuantCardAddDell",
+                contentType: "application/json; charset=utf-8",
+            }).done(function(response) {
+                $("#CardPost").html(response);
+                //$('.backdrop-spinner').addClass('d-none');
+            }).fail(function(response) {
+                //$('.backdrop-spinner').addClass('d-none');
+                alert("An error occurred while increasing the number of products.");
+            })
+        };
+        $('.ProdQty').on('input', qtyPriceFunc);
+    })
+</script>

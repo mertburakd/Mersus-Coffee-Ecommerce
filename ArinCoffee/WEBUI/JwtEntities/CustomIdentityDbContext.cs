@@ -12,6 +12,7 @@ namespace WEBUI.JwtEntities
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.HasDefaultSchema("dbo");
             base.OnModelCreating(builder);
 
         }

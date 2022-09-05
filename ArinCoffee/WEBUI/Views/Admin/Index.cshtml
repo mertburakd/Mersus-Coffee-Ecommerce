@@ -18,47 +18,21 @@
                     <div id="chart"></div>
                 </div>
                 <div class="widget-data">
+                    <div class="h4 mb-0">@Model.products.Count</div>
+                    <div class="weight-600 font-14">Total Product</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-1 mb-30">
+        <div class="card-box height-100-p widget-style1">
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="progress-data">
+                    <div id="chart"></div>
+                </div>
+                <div class="widget-data">
                     <div class="h4 mb-0">@Model.orders.Count</div>
-                    <div class="weight-600 font-14">Toplam Sipariş</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-1 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    <div id="chart"></div>
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">@Model.orders.Where(q=>q.Status==1).Count()</div>
-                    <div class="weight-600 font-14">Onaylanan EOyunlar</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-1 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    <div id="chart"></div>
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">@Model.orders.Where(q=>q.Status==0).Count()</div>
-                    <div class="weight-600 font-14">Redlenen Siparişler</div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-xl-1 mb-30">
-        <div class="card-box height-100-p widget-style1">
-            <div class="d-flex flex-wrap align-items-center">
-                <div class="progress-data">
-                    <div id="chart"></div>
-                </div>
-                <div class="widget-data">
-                    <div class="h4 mb-0">@Model.orders.Where(q=>q.Status==null).Count()</div>
-                    <div class="weight-600 font-14">Bekleyen Siparişler</div>
+                    <div class="weight-600 font-14">Total Request</div>
                 </div>
             </div>
         </div>
@@ -70,28 +44,17 @@
 <br />
 
 <div class="card-box mb-30">
-    <h2 class="h4 pd-20">Kategoriler Tablosu</h2>
+    <h2 class="h4 pd-20">Categories</h2>
     <table class="data-table table nowrap">
-        <thead>
-            <tr>
-                <th>Kategori Adı</th>
-                <th>Açıklama</th>
-
-
-                <th class="datatable-nosort">Action</th>
-            </tr>
-        </thead>
         <tbody>
             @{
 
                 foreach (var item in Model.categories)
                 {
                     <tr>
-
                         <td>
                             <h5 class="font-16">@item.CategoryName</h5>
                         </td>
-
                         <td>@Html.Raw(item.Description)</td>
                         <td>
                             <div class="dropdown">
@@ -99,37 +62,33 @@
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="/Admin/CategoryDetails?id=@item.Id"><i class="dw dw-edit2"></i>Düzenle</a>
-                                    <a class="dropdown-item" href="/Admin/CategoryDeleted?id=@item.Id"><i class="dw dw-delete-3"></i>Sil</a>
+                                    <a class="dropdown-item" href="/Admin/CategoryDetails?id=@item.Id"><i class="dw dw-edit2"></i>Edit</a>
+                                    <a class="dropdown-item" href="/Admin/CategoryDeleted?id=@item.Id"><i class="dw dw-delete-3"></i>Delete</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
                 }
             }
-
         </tbody>
     </table>
 </div>
 <br />
 
-
 <div class="card-box mb-30">
-    <h2 class="h4 pd-20">Ürünler Tablosu</h2>
+    <h2 class="h4 pd-20">Product Table</h2>
     <table class="data-table table nowrap">
         <thead>
             <tr>
-                <th class="table-plus datatable-nosort">Resim</th>
-                <th>Ürün Adı</th>
-                <th>Fiyat</th>
-                <th>Ağırlık</th>
-
+                <th class="table-plus datatable-nosort">Image</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Weight</th>
                 <th class="datatable-nosort">Action</th>
             </tr>
         </thead>
         <tbody>
             @{
-
                 foreach (var item in Model.products)
                 {
                     <tr>
@@ -139,20 +98,16 @@
                         <td>
                             <h5 class="font-16">@item.ProductName</h5>
                         </td>
-
                         <td>@item.Price</td>
                         <td>@item.Weight</td>
-
-
-
                         <td>
                             <div class="dropdown">
                                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                                     <i class="dw dw-more"></i>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                                    <a class="dropdown-item" href="/Admin/ProductEdit?Id=@item.ProductId"><i class="dw dw-edit2"></i>Düzenle</a>
-                                    <a class="dropdown-item" href="/Admin/DeleteProduct?Id=@item.ProductId"><i class="dw dw-delete-3"></i>Sil</a>
+                                    <a class="dropdown-item" href="/Admin/ProductEdit?Id=@item.ProductId"><i class="dw dw-edit2"></i>Edit</a>
+                                    <a class="dropdown-item" href="/Admin/DeleteProduct?Id=@item.ProductId"><i class="dw dw-delete-3"></i>Delete</a>
                                 </div>
                             </div>
                         </td>

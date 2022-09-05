@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 using WEBUI.JwtEntities;
 using WEBUI.LoginModels;
 
@@ -23,6 +24,7 @@ namespace WEBUI.Controllers
 
         public ActionResult Index()
         {
+            var x = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
             return RedirectToAction("Login", "AdminLogin");
         }
         //[Authorize(Roles = "Admin")]

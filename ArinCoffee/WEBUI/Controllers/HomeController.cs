@@ -1,4 +1,5 @@
 ﻿using Buisness.Abstract;
+using Entities.Models.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -9,17 +10,21 @@ namespace WEBUI.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ICardService _cardService;
         private readonly IProductService _productService;
-        public HomeController(ILogger<HomeController> logger, ICardService cardService, IProductService productService)
+        private readonly ICategoryService _categoryService;
+        public HomeController(ILogger<HomeController> logger, ICardService cardService, IProductService productService, ICategoryService categoryService)
         {
             _logger = logger;
             _cardService = cardService;
             _productService = productService;
+            _categoryService = categoryService;
         }
 
         public IActionResult Index()
         {
-            var val = _cardService.GetList().Data;
-                return View();
+            IndexViewModel model = new IndexViewModel();
+            model.products = _productService.GetList().Data;
+            model.categories=_categoryService.GetList().Data;
+            return View(model);
         }
 
         public IActionResult Privacy()
@@ -27,12 +32,6 @@ namespace WEBUI.Controllers
             return View();
         }
 
-   
-        public IActionResult Menu()
-        {
-            var model = _productService.GetList();
-            return View(model.Data);
-        }
         public IActionResult Contact()
         {
             return View();
@@ -48,20 +47,13 @@ namespace WEBUI.Controllers
             return View();
         }
 
-        public IActionResult Checkout ()
-        {
-            return View();
-        }
+
 
         public IActionResult Faq()
         {
             return View();
         }
 
-        public IActionResult Cart()
-        {
-            return View();
-        }
 
         public IActionResult Gallery()
         {

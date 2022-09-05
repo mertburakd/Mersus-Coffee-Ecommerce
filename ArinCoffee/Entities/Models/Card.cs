@@ -11,14 +11,16 @@ namespace Entities.Models
     {
         public Card()
         {
-            Orders = new HashSet<Order>();
+            Orders = new HashSet<Orders>();
         }
         [Key]
         public int Id { get; set; }
         public int UsersId { get; set; }
         public int ProductId { get; set; }
-        public int Status { get; set; }
+        public bool? Status { get; set; }
+        public int Piece { get; set; }
+        public int GroupBy { get; set; }
         public virtual Product Product { get; set; } 
-        public virtual ICollection<Order> Orders { get; set; }
+        public virtual ICollection<Orders> Orders { get; set; }
     }
 }
