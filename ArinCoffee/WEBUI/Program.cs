@@ -2,6 +2,7 @@ using Buisness.Abstract;
 using Buisness.Concrete;
 using DataAccess.Abstract;
 using DataAccess.Concrete;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -88,6 +89,14 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "member_cookie";
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(90);
+    options.ReturnUrlParameter = CookieAuthenticationDefaults.ReturnUrlParameter;
+    options.SlidingExpiration = true;
+});
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
@@ -120,7 +129,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 app.UseRouting();
-
 app.UseCors("MyPolicy");
 
 app.UseAuthentication();

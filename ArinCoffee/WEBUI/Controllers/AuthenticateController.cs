@@ -7,6 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WEBUI.JwtEntities;
+using WEBUI.LoginModels;
 using WEBUI.Models;
 
 namespace WEBUI.Controllers
@@ -62,7 +63,7 @@ namespace WEBUI.Controllers
 
         [HttpPost]
         [Route("register")]
-        public async Task<IActionResult> Register([FromBody] AdminRegisterViewModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             var userExists = await _userManager.FindByEmailAsync(model.Email);
             if (userExists != null)
@@ -72,7 +73,11 @@ namespace WEBUI.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
+                UserName = model.UserName,
+                IpAdress = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
+                Address = model.Address,
+                Country = model.Country,
+                City = model.City,
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
@@ -83,7 +88,7 @@ namespace WEBUI.Controllers
 
         [HttpPost]
         [Route("register-admin")]
-        public async Task<IActionResult> RegisterAdmin([FromBody] AdminRegisterViewModel model)
+        public async Task<IActionResult> RegisterAdmin([FromBody] RegisterViewModel model)
         {
             var userExists = await _userManager.FindByEmailAsync(model.Email);
             if (userExists != null)
@@ -93,7 +98,11 @@ namespace WEBUI.Controllers
             {
                 Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
-                UserName = model.UserName
+                UserName = model.UserName,
+                IpAdress = Request.HttpContext.Connection.RemoteIpAddress.ToString(),
+                Address = model.Address,
+                Country = model.Country,
+                City = model.City,
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)

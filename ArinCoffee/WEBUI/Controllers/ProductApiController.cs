@@ -1,87 +1,25 @@
 ﻿using Buisness.Abstract;
 using Entities.Models;
-using Entities.Models.DTO;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Security.Claims;
-using WEBUI.JwtEntities;
 
 namespace WEBUI.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class AdminController : Controller
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ProductApiController : ControllerBase
     {
-
-        private UserManager<CustomIdentityUser> _userManager;
-        private readonly IWebHostEnvironment _env2;
         private readonly IProductService _productService;
-        private readonly IOrderService _orderService;
-        private readonly ICategoryService _categoryService;
 
-        public AdminController
-            (UserManager<CustomIdentityUser> userManager, IWebHostEnvironment env2, IProductService productService, IOrderService orderService, ICategoryService categoryService)
+        public ProductApiController(IProductService productService)
         {
-            _userManager = userManager;
-            _env2 = env2;
             _productService = productService;
-            _orderService = orderService;
-            _categoryService = categoryService;
         }
 
-
-        public async Task<IActionResult> Index()
-        {
-            IndexViewModel model = new IndexViewModel();
-            model.products = _productService.GetList().Data;
-            model.orders = _orderService.GetList().Data;
-            model.categories = _categoryService.GetList().Data;
-            return View(model);
-        }
-
-        public IActionResult CategoryDetails(int id)
-        {
-            return View(_categoryService.Get(id).Data);
-        }
-        public IActionResult CategoryAdd()
-        {
-            return View();
-        }
-        public IActionResult CategoryDeleted(int id)
-        {
-            _categoryService.Delete(id);
-            return RedirectToAction("", "Admin");
-        }
-        [HttpPost]
-        public IActionResult CategoryAdd(Category category)
-        {
-            _categoryService.Add(category);
-            return RedirectToAction("Index", "Admin");
-        }
-        public IActionResult CategoryEdit(Category category)
-        {
-            _categoryService.Update(category);
-            return RedirectToAction("Index", "Admin");
-        }
-
-        public IActionResult ProductAdd()
-        {
-            ProductDesignViewModel productDesignViewModel = new ProductDesignViewModel();
-            productDesignViewModel.categories = _categoryService.GetList().Data;
-            productDesignViewModel.product = new Product();
-            return View(productDesignViewModel);
-        }  
-        public IActionResult TotalOrders()
-        {
-            AdminViewOrderModel orderdata = new AdminViewOrderModel();
-            orderdata.cards = _orderService.GetAllOrders().Data;
-            return View(orderdata);
-        }
-
-        [HttpPost]
-        public IActionResult ProductAdd(Product product, IFormFile ourFileMini, IFormFile ourFile, IFormFile ourFile2, IFormFile ourFile3, IFormFile ourFile4, IFormFile ourFile5)
+        [HttpPost("add")]
+        public IActionResult Post([FromBody] Product product, IFormFile ourFileMini, IFormFile ourFile, IFormFile ourFile2, IFormFile ourFile3, IFormFile ourFile4, IFormFile ourFile5)
         {
             if (ourFileMini != null)
             {
@@ -146,30 +84,17 @@ namespace WEBUI.Controllers
             }
 
 
-            _productService.Add(product);
-            return RedirectToAction("Index", "Admin");
+           var result= _productService.Add(product);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
         }
 
-
-        public IActionResult ProductEdit(int Id)
+        [HttpPut("update")]
+        public IActionResult Update([FromBody] Product product, IFormFile ourFileMini, IFormFile ourFile, IFormFile ourFile2, IFormFile ourFile3, IFormFile ourFile4, IFormFile ourFile5)
         {
-            ProductDesignViewModel productDesignViewModel = new ProductDesignViewModel();
-            productDesignViewModel.product = _productService.Get(Id).Data;
-            productDesignViewModel.categories = _categoryService.GetList().Data;
-            return View(productDesignViewModel);
-        }
-
-        public IActionResult DeleteProduct(int Id)
-        {
-            _productService.Delete(Id);
-            return RedirectToAction("", "Admin");
-        }
-
-
-        [HttpPost("ProductEdit")]
-        public IActionResult ProductEdit(Product product, IFormFile ourFileMini, IFormFile ourFile, IFormFile ourFile2, IFormFile ourFile3, IFormFile ourFile4, IFormFile ourFile5)
-        {
-
             var ProductGet = _productService.Get(product.ProductId).Data;
             if (ourFileMini != null)
             {
@@ -264,9 +189,32 @@ namespace WEBUI.Controllers
             ProductGet.MiniDescription = product.MiniDescription;
             ProductGet.Weight = product.Weight;
             ProductGet.Category = product.Category;
-            _productService.Update(ProductGet);
-
-            return RedirectToAction("", "Admin");
+           var result= _productService.Update(ProductGet);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpDelete("delete")]
+        public IActionResult Delete(int id)
+        {
+           var result= _productService.Delete(id);
+            if (result.Success)
+            {
+                return Ok(result.Message);
+            }
+            return BadRequest(result.Message);
+        }
+        [HttpGet("getall")]
+        public IActionResult GetAll()
+        {
+            return Ok(_productService.GetList());
+        }
+        [HttpGet("get")]
+        public IActionResult Get(int id)
+        {
+            return Ok(_productService.Get(id));
         }
 
     }

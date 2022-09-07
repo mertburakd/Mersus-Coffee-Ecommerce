@@ -10,8 +10,12 @@ namespace Buisness.Abstract
     public interface IOrderService
     {
         IDataResult<List<Orders>> GetList();
+        IDataResult<Orders> Get(int id);
         IDataResult<List<IGrouping<int, Card>>> GetOrders(int userId);
         IDataResult<List<IGrouping<int, Card>>> GetAllOrders();
         IResult AddOrder(Adress adress);
+        IResult Update(Orders orders);
+        IResult Delete(int id);
+
     }
 }

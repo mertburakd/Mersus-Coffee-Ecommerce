@@ -27,6 +27,8 @@
         public static string AdressAdded = "Adres Bilgisi Eklendi!";
 
         public static string OrderAdded = "Sipariş Eklendi!";
+        public static string OrderUpdated = "Sipariş Güncellendi!";
+        public static string OrderDeleted = "Sipariş Silindi!";
 
   
     }

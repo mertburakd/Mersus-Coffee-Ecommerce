@@ -63,6 +63,23 @@ namespace Buisness.Concrete
         {
             return new SuccessDataResult<List<IGrouping<int, Card>>>(_orderDal.GetAllOrders());
         }
+
+        public IResult Update(Orders orders)
+        {
+            _orderDal.Update(orders);
+            return new SuccessResult(Messages.OrderUpdated);
+        }
+
+        public IResult Delete(int id)
+        {
+            _orderDal.Delete(_orderDal.Get(q => q.Id == id));
+            return new SuccessResult(Messages.OrderDeleted);
+        }
+
+        public IDataResult<Orders> Get(int id)
+        {
+            return new SuccessDataResult<Orders>(_orderDal.Get(q=>q.Id==id));
+        }
     }
 }
 
