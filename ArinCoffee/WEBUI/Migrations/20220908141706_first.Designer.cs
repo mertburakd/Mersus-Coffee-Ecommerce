@@ -12,7 +12,7 @@ using WEBUI.JwtEntities;
 namespace WEBUI.Migrations
 {
     [DbContext(typeof(CustomIdentityDbContext))]
-    [Migration("20220904205516_first")]
+    [Migration("20220908141706_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

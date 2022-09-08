@@ -76,8 +76,8 @@ namespace WEBUI.Controllers
         public IActionResult TotalOrders()
         {
             AdminViewOrderModel orderdata = new AdminViewOrderModel();
-            orderdata.cards = _orderService.GetAllOrders().Data;
-            return View(orderdata);
+            //orderdata.cards = _orderService.GetAllOrders().Data;
+            return View(/*orderdata*/);
         }
 
         [HttpPost]

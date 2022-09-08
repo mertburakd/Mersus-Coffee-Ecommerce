@@ -1,7 +1,9 @@
 ﻿using Entities.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Proxies;
 
 namespace DataAccess.Concrete.EntityFramwork
 {
@@ -14,7 +16,7 @@ namespace DataAccess.Concrete.EntityFramwork
             .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
             .AddJsonFile("appsettings.json")
             .Build();
-            optionsBuilder.UseSqlServer(configuration.GetConnectionString("MyData"));
+            optionsBuilder.UseSqlServer(configuration.GetConnectionString("MyData")).UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 
         }
 

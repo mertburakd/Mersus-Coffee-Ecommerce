@@ -13,7 +13,7 @@ namespace DataAccess.Abstract
     public interface IOrderDal : IEntityRepository<Orders>
     {
         void AddRange(List<Orders> order);
-        public List<IGrouping<int, Card>> GetOrders(int userId);
-        public List<IGrouping<int, Card>> GetAllOrders();
+        public List<AllOrderDto> GetOrders(int userId);
+        public List<AllOrderDto> GetAllOrders();
     }
 }

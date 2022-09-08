@@ -130,12 +130,11 @@ if (!app.Environment.IsDevelopment())
 }
 app.UseRouting();
 app.UseCors("MyPolicy");
-
+app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseStaticFiles();
 app.UseHttpsRedirection();
+
 app.UseSwagger();
 
 app.UseSwaggerUI(option =>

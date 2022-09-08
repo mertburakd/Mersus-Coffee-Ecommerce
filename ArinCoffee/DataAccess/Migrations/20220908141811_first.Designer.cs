@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(ArinCoffeeContext))]
-    [Migration("20220904211519_first")]
+    [Migration("20220908141811_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,6 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CompanyName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Country")
@@ -87,6 +86,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("GroupBy")
+                        .HasColumnType("int");
 
                     b.Property<int>("Piece")
                         .HasColumnType("int");
@@ -146,9 +148,6 @@ namespace DataAccess.Migrations
 
                     b.Property<DateTime?>("OrderTime")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool?>("Status")
-                        .HasColumnType("bit");
 
                     b.Property<int>("UsersId")
                         .HasColumnType("int");

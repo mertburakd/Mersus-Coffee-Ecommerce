@@ -68,6 +68,7 @@ namespace WEBUI.Controllers
         [HttpGet("getallorders")]
         public IActionResult GetAllOrders()
         {
+            var orders = _orderService.GetAllOrders();
             return Ok(_orderService.GetAllOrders());
         }
     }

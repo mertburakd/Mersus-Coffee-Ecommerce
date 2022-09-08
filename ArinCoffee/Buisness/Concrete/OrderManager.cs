@@ -3,6 +3,7 @@ using Business.Constants;
 using Core.Results;
 using DataAccess.Abstract;
 using Entities.Models;
+using Entities.Models.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,9 +50,9 @@ namespace Buisness.Concrete
             return new SuccessResult(Messages.OrderAdded);
         }
 
-        public IDataResult<List<IGrouping<int, Card>>> GetOrders(int userId)
+        public IDataResult<List<AllOrderDto>> GetOrders(int userId)
         {
-            return new SuccessDataResult<List<IGrouping<int, Card>>>(_orderDal.GetOrders(userId));
+            return new SuccessDataResult<List<AllOrderDto>>(_orderDal.GetOrders(userId));
         }
 
         public IDataResult<List<Orders>> GetList()
@@ -59,9 +60,9 @@ namespace Buisness.Concrete
             return new SuccessDataResult<List<Orders>>(_orderDal.GetList());
         }
 
-        public IDataResult<List<IGrouping<int, Card>>> GetAllOrders()
+        public IDataResult<List<AllOrderDto>> GetAllOrders()
         {
-            return new SuccessDataResult<List<IGrouping<int, Card>>>(_orderDal.GetAllOrders());
+            return new SuccessDataResult<List<AllOrderDto>>(_orderDal.GetAllOrders());
         }
 
         public IResult Update(Orders orders)

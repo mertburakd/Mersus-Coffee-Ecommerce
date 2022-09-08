@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Entities.Models.DTO
 {
-    public class UserProfileViewModel : IDto
+    public class AllOrderDto:IDto
     {
-        public List<AllOrderDto> allOrderDto { get; set; }
+        public int Id { get; set; }
+        public List<Card> card { get; set; }
     }
 }

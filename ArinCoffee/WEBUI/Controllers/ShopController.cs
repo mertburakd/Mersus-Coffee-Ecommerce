@@ -75,7 +75,7 @@ namespace WEBUI.Controllers
         public IActionResult OrderHistory()
         {
             UserProfileViewModel userdata = new UserProfileViewModel();
-            userdata.cards = _orderService.GetOrders(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))).Data;
+            userdata.allOrderDto = _orderService.GetOrders(Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier))).Data;
             return View(userdata);
         }
 

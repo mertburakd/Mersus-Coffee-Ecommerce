@@ -17,10 +17,10 @@
             </tr>
         </thead>
         @{    
-            @foreach (var item in Model.cards)
+            @foreach (var item in Model.allOrderDto)
             {
                 <tbody>
-                    @foreach (var zi in item)
+                    @foreach (var zi in item.card)
                     {
                         <tr>
                             <th scope="row">@zi.Id</th>
